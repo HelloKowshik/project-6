@@ -1,9 +1,10 @@
-class UI{
+class UI {
     constructor() {
         this.profile = document.getElementById('profile');
+
     }
-    displayProfile(user) {
-        const { avatar_url, html_url, public_repos, public_gists, followers, following, company, blog, location, created_at ,name} = user;
+    showProfile(user) {
+		const { avatar_url, html_url, public_repos, public_gists, followers, following, company, blog, location, created_at ,name} = user;
         this.profile.innerHTML = `
         <div class="card card-body mb-3">
         <div class="row">
@@ -31,11 +32,11 @@ class UI{
     <div id="repos"></div>
         `;
     }
-    displayRepos(repos) {
-        let result = '';
-        repos.forEach(repo => { 
-            const { html_url,name,stargazers_count,watchers_count,forks_count} = repo;
-            result += `
+    showRepos(repos) {
+        let output = '';
+        repos.forEach(function(repo) {
+			const { html_url,name,stargazers_count,watchers_count,forks_count} = repo;
+            output += `
             <div class="card card-body mb-2">
             <div class="row">
                 <div class="col-md-6">
@@ -50,29 +51,31 @@ class UI{
         </div>
             `;
         });
-        document.getElementById('repos').innerHTML = result;
+
+        document.getElementById('repos').innerHTML = output;
     }
-    displayAlert(alertMsg,alertClass) {
-        this.clearMsg();
-        let div = document.createElement('div');
-        div.className = alertClass;
-        let text = document.createTextNode(alertMsg);
-        div.appendChild(text);
-        const containerBox = document.querySelector('.searchContainer');
-        const searchBox = document.querySelector('.search');
-        containerBox.insertBefore(div, searchBox);
+    showAlert(message, className) {
+        this.clearAlert();
+        const div = document.createElement('div');
+        div.className = className;
+        div.appendChild(document.createTextNode(message));
+        const container = document.querySelector('.searchContainer');
+        const search = document.querySelector('.search');
+        container.insertBefore(div, search);
         setTimeout(() => {
-            this.clearMsg();
+            this.clearAlert();
         }, 2000);
     }
-    clearMsg() {
-        const currentMsg = document.querySelector('.alert');
-        if (currentMsg) {
-            currentMsg.remove();
+
+    clearAlert() {
+        const currentAlert = document.querySelector('.alert');
+
+        if(currentAlert) {
+            currentAlert.remove();
         }
     }
-    clearAll() {
-        this.profile.innerHTML = '';
+	
+    clearProfile(message, className) {
+        this.profile.innerHTML = '';    
     }
-
 }

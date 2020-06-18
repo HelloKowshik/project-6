@@ -1,23 +1,21 @@
-let app = new App();
-let ui = new UI();
-let searchInput = document.getElementById('searchUser');
-searchInput.addEventListener('keyup', getUserInfo);
+const app = new App();  
+const ui = new UI();
 
-function getUserInfo(e) {
-    let inputText = e.target.value;
-    if (inputText !== '') {
-        app.getUser(inputText)
-            .then(data => { 
-                const { profile, repos } = data;
-                console.log(repos);
-                if (profile.message === 'Not Found') {
-                    ui.displayAlert('User Not Found', 'alert alert-info');
-                } else {
-                    ui.displayProfile(profile);
-                    ui.displayRepos(repos);
+const searchUser = document.getElementById('searchUser');
+searchUser.addEventListener('keyup', (e) => {
+    const userText = e.target.value;
+    if(userText !== '') {
+        app.getUser(userText)
+        .then(data => { 
+		const {profile,repos} = data;
+            if(data.profile.message === 'Not Found') {
+                ui.showAlert('User Not Found', 'alert alert-info');
+            } else {
+                ui.showProfile(profile);
+                ui.showRepos(repos);
             }
         })
     } else {
-        ui.clearAll();
+        ui.clearProfile();
     }
-}
+});
